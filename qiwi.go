@@ -85,16 +85,19 @@ func (qiwi *QiwiPersonalApi) sendRequest(apiKey, method, spath string, data map[
 	}
 }
 
-/*
-QIWI Currency
-*/
 type Currency int
 
-/*
-Currency codes (ISO 4217)
-*/
 const (
 	RUB Currency = 643
 	USD Currency = 840
 	EUR Currency = 978
+)
+
+type IdentificationLevel string
+
+const (
+	SIMPLE    IdentificationLevel = "SIMPLE"
+	VERIFIED  IdentificationLevel = "VERIFIED"
+	FULL      IdentificationLevel = "FULL"
+	ANONYMOUS IdentificationLevel = "ANONYMOUS"
 )

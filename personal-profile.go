@@ -98,8 +98,8 @@ type PersonProfileContractInfo struct {
 	CreationDate       time.Time     `json:"creationDate"`
 	Features           []interface{} `json:"features"`
 	IdentificationInfo []struct {
-		BankAlias           string `json:"bankAlias"`
-		IdentificationLevel string `json:"identificationLevel"`
+		BankAlias           string              `json:"bankAlias"`
+		IdentificationLevel IdentificationLevel `json:"identificationLevel"`
 	} `json:"identificationInfo"`
 }
 
