@@ -1,4 +1,4 @@
-# QIWI personal api
+# QIWI personal API
 
 QIWI Wallet API makes it easy to automate getting info on your account’s state in QIWI Wallet service and making financial operations.
 
@@ -8,7 +8,7 @@ QIWI Wallet API makes it easy to automate getting info on your account’s state
 
 ## Examples
 
-### Create new API
+### Init API
 
 ```go
 package main

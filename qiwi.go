@@ -88,16 +88,43 @@ func (qiwi *QiwiPersonalApi) sendRequest(apiKey, method, spath string, data map[
 type Currency int
 
 const (
-	RUB Currency = 643
-	USD Currency = 840
-	EUR Currency = 978
+	CURRENCY_RUB Currency = 643
+	CURRENCY_USD Currency = 840
+	CURRENCY_EUR Currency = 978
 )
 
 type IdentificationLevel string
 
 const (
-	SIMPLE    IdentificationLevel = "SIMPLE"
-	VERIFIED  IdentificationLevel = "VERIFIED"
-	FULL      IdentificationLevel = "FULL"
-	ANONYMOUS IdentificationLevel = "ANONYMOUS"
+	ID_LEVEL_SIMPLE    IdentificationLevel = "SIMPLE"
+	ID_LEVEL_VERIFIED  IdentificationLevel = "VERIFIED"
+	ID_LEVEL_FULL      IdentificationLevel = "FULL"
+	ID_LEVEL_ANONYMOUS IdentificationLevel = "ANONYMOUS"
+)
+
+type PaymentSource string
+
+const (
+	PAY_SOURCE_QW_RUB PaymentSource = "QW_RUB"
+	PAY_SOURCE_QW_USD PaymentSource = "QW_USD"
+	PAY_SOURCE_QW_EUR PaymentSource = "QW_EUR"
+	PAY_SOURCE_CARD   PaymentSource = "CARD"
+	PAY_SOURCE_MK     PaymentSource = "MK"
+)
+
+type PaymentHistoryOperation string
+
+const (
+	PH_OPERATION_ALL       PaymentHistoryOperation = "ALL"
+	PH_OPERATION_IN        PaymentHistoryOperation = "IN"
+	PH_OPERATION_OUT       PaymentHistoryOperation = "OUT"
+	PH_OPERATION_QIWI_CARD PaymentHistoryOperation = "QIWI_CARD"
+)
+
+type PaymentStatus string
+
+const (
+	PAY_STATUS_WAITING PaymentStatus = "WAITING"
+	PAY_STATUS_SUCCESS PaymentStatus = "SUCCESS"
+	PAY_STATUS_ERROR   PaymentStatus = "ERROR"
 )
