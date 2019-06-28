@@ -8,21 +8,7 @@ QIWI Wallet API makes it easy to automate getting info on your account’s state
 
 ## Examples
 
-### Init API
-
-```go
-package main
-
-import (
-	qiwi "github.com/neqin/qiwi-personal-api"
-)
-
-func main() {
-    qiwi.NewQiwiPersonalApi("5fa740ea1daf00665aa312...")
-}
-```
-
-### Get Identification
+### Init and get identification info
 ```go
 package main
 
@@ -40,3 +26,17 @@ func main() {
     log.Println(res)
 }
 ```
+
+### list API method
+
+- [x] Person’s Profile [GetPersonProfile] 
+- [x] Payments History [GetPaymentsHistory] (simple)
+- [ ] Checkout 
+- [ ] Statistics on payments
+- [ ] QIWI Wallet Balances
+- [ ] Commission rates
+- [ ] Peer-to-Peer QIWI Wallet Transfer
+- [ ] Wireless operator check
+- [ ] Card transfer
+- [ ] Card system check
+- [ ] Wire transfer
