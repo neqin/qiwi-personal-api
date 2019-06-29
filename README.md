@@ -33,7 +33,7 @@ func main() {
 - [x] Payments History [GetPaymentsHistory] (simple)
 - [x] Statistics on payments [GetPaymentsStats]
 - [ ] Checkout 
-- [ ] QIWI Wallet Balances
+- [x] QIWI Wallet Balances [GetWalletBalance]
 - [ ] Commission rates
 - [ ] Peer-to-Peer QIWI Wallet Transfer
 - [ ] Wireless operator check
