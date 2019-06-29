@@ -73,9 +73,9 @@ type PaymentsHistoryData struct {
 	StatusText            string
 	TrmTxnID              string `json:"trmTxnId"`
 	Account               string
-	Sum                   PaymentsHistorySum
-	Commission            PaymentsHistorySum
-	Total                 PaymentsHistorySum
+	Sum                   PaymentAmount
+	Commission            PaymentAmount
+	Total                 PaymentAmount
 	Provider              PaymentsHistoryProvider
 	Comment               string
 	CurrencyRate          float64
@@ -86,8 +86,8 @@ type PaymentsHistoryData struct {
 	RepeatPaymentEnabled  bool
 }
 
-type PaymentsHistorySum struct {
-	Ammount  float32
+type PaymentAmount struct {
+	Amount   float32
 	Currency string
 }
 
@@ -113,6 +113,48 @@ func (qiwi *QiwiPersonalApi) GetPaymentsHistory(wallet string, rows int) (*Payme
 	}
 
 	var res PaymentsHistory
+	err = json.Unmarshal(resp, &res)
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
+
+/*
+{
+ "incomingTotal":[
+  {
+  "amount":3500,
+  "currency":"RUB"
+  }],
+ "outgoingTotal":[
+  {
+  "amount":3497.5,
+  "currency":"RUB"
+  }]
+}
+*/
+type PaymentsStats struct {
+	IncomingTotal []PaymentAmount
+	OutgoingTotal []PaymentAmount
+}
+
+/*
+GetPaymentsStats
+
+PH_OPERATION_ALL 		= "ALL"
+PH_OPERATION_IN 		= "IN"
+PH_OPERATION_OUT 		= "OUT"
+PH_OPERATION_QIWI_CARD 	= "QIWI_CARD"
+*/
+func (qiwi *QiwiPersonalApi) GetPaymentsStats(wallet string, op PaymentHistoryOperation) (*PaymentsStats, error) {
+	resp, err := qiwi.sendRequest(qiwi.apiKey, "GET", fmt.Sprintf("/payment-history/v1/persons/%s/payments/total?operation=%s", wallet, op), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	var res PaymentsStats
 	err = json.Unmarshal(resp, &res)
 	if err != nil {
 		return nil, err

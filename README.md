@@ -31,8 +31,8 @@ func main() {
 
 - [x] Person’s Profile [GetPersonProfile] 
 - [x] Payments History [GetPaymentsHistory] (simple)
+- [x] Statistics on payments [GetPaymentsStats]
 - [ ] Checkout 
-- [ ] Statistics on payments
 - [ ] QIWI Wallet Balances
 - [ ] Commission rates
 - [ ] Peer-to-Peer QIWI Wallet Transfer
