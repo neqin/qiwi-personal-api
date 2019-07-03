@@ -34,8 +34,8 @@ func main() {
 - [x] Statistics on payments [GetPaymentsStats]
 - [ ] Checkout 
 - [x] QIWI Wallet Balances [GetWalletBalance]
-- [ ] Commission rates
-- [ ] Peer-to-Peer QIWI Wallet Transfer
+- [x] Commission rates [GetCommissions]
+- [x] Peer-to-Peer QIWI Wallet Transfer [TransferP2P]
 - [ ] Wireless operator check
 - [ ] Card transfer
 - [ ] Card system check

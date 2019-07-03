@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -44,6 +45,7 @@ func (qiwi *QiwiPersonalApi) newRequest(apiKey, method, spath string, data map[s
 	var body io.Reader
 	if len(data) > 0 {
 		s, err := json.Marshal(data)
+
 		if err != nil {
 			return nil, err
 		}
@@ -61,6 +63,11 @@ func (qiwi *QiwiPersonalApi) newRequest(apiKey, method, spath string, data map[s
 	return req, err
 }
 
+type QiwiTransError struct {
+	Code    string
+	Message string
+}
+
 func (qiwi *QiwiPersonalApi) sendRequest(apiKey, method, spath string, data map[string]interface{}) (body []byte, err error) {
 	req, err := qiwi.newRequest(apiKey, method, spath, data)
 	response, err := qiwi.httpClient.Do(req)
@@ -68,12 +75,20 @@ func (qiwi *QiwiPersonalApi) sendRequest(apiKey, method, spath string, data map[
 		return nil, err
 	} else {
 		body, err := ioutil.ReadAll(response.Body)
-		//log.Println(string(body))
+
 		if err != nil {
 			if response.Body != nil {
 				response.Body.Close()
 			}
 			return nil, err
+		}
+		if response.StatusCode == 400 {
+			var res QiwiTransError
+			err = json.Unmarshal(body, &res)
+			if err != nil {
+				return nil, err
+			}
+			return nil, fmt.Errorf("%s : %s", res.Code, res.Message)
 		}
 		if response.StatusCode != 200 {
 			return nil, errors.New(response.Status)
@@ -127,4 +142,29 @@ const (
 	PAY_STATUS_WAITING PaymentStatus = "WAITING"
 	PAY_STATUS_SUCCESS PaymentStatus = "SUCCESS"
 	PAY_STATUS_ERROR   PaymentStatus = "ERROR"
+)
+
+/*
+99 - Перевод на QIWI Wallet
+1963 - Перевод на карту Visa (карты российских банков)
+21013 - Перевод на карту MasterCard (карты российских банков)
+Для карт, выпущенных банками стран Азербайджан, Армения, Белоруссия, Грузия, Казахстан, Киргизия, Молдавия, Таджикистан, Туркменистан, Украина, Узбекистан:
+1960 – Перевод на карту Visa
+21012 – Перевод на карту MasterCard
+31652 - национальная платежная система МИР
+466 - Тинькофф Банк
+464 - Альфа-Банк
+*/
+
+type PaymentProvider string
+
+const (
+	PROVIDER_QIWI_WALLET    PaymentProvider = "99"
+	PROVIDER_VISA           PaymentProvider = "1963"
+	PROVIDER_MASTERCARD     PaymentProvider = "21013"
+	PROVIDER_VISA_CIS       PaymentProvider = "1960"
+	PROVIDER_MASTERCARD_CIS PaymentProvider = "21012"
+	PROVIDER_MIR            PaymentProvider = "31652"
+	PROVIDER_TINKOFF        PaymentProvider = "466"
+	PROVIDER_ALFABANK       PaymentProvider = "464"
 )

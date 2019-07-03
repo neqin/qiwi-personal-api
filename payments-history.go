@@ -88,7 +88,7 @@ type PaymentsHistoryData struct {
 
 type PaymentAmount struct {
 	Amount   float32
-	Currency string
+	Currency Currency
 }
 
 type PaymentsHistoryProvider struct {
